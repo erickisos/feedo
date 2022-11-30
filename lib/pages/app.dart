@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../routes.dart' as routes;
-import 'home.dart' as home;
-import 'explore.dart' as explore;
-import 'bookmarks.dart' as bookmarks;
+import 'home.dart';
 import 'login.dart';
 
 class App extends StatefulWidget {
@@ -16,20 +14,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _selectedIndex = 0;
-
-  // ignore: prefer_final_fields
-  static List<Widget> _widgetOptions = <Widget>[
-    home.HomePage(),
-    bookmarks.BookmarksPage(),
-    explore.ExplorePage(),
-  ];
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var title = 'Feedo';
@@ -40,36 +24,9 @@ class _AppState extends State<App> {
       ),
       routes: {
         App.loginRoute: (context) => LoginPage(),
+        App.homeRoute: (context) => const HomePage()
       },
-      home: Scaffold(
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: _onItemTapped,
-          elevation: 0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          currentIndex: _selectedIndex,
-          backgroundColor: Colors.black87,
-          selectedItemColor: Colors.white70,
-          unselectedItemColor: Colors.white38,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_outline),
-              label: 'Bookmarks',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore_outlined),
-              label: 'Discover',
-            ),
-          ],
-        ),
-      ),
+      initialRoute: "/login",
     );
   }
 }

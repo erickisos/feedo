@@ -1,43 +1,58 @@
 import 'package:flutter/material.dart';
+import 'bookmarks.dart';
+import 'explore.dart';
+import 'recents.dart';
 
 class HomePage extends StatefulWidget {
-  final String title;
-
-  const HomePage({super.key, required this.title});
+  const HomePage({super.key});
 
   @override
   State<StatefulWidget> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
+  final List<Widget> _widgetOptions = <Widget>[
+    RecentsPage(),
+    BookmarksPage(),
+    ExplorePage(),
+  ];
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            )
-          ],
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
+        elevation: 0,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _selectedIndex,
+        backgroundColor: Colors.black87,
+        selectedItemColor: Colors.white70,
+        unselectedItemColor: Colors.white38,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'News',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_outline),
+            label: 'Bookmarks',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore_outlined),
+            label: 'Discover',
+          ),
+        ],
       ),
     );
   }
